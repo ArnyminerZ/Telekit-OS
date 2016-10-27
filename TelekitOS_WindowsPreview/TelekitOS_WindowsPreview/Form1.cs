@@ -107,7 +107,7 @@ namespace TelekitOS_WindowsPreview
             foreach (App app in AppsControl.installedApps)
             {
                 //materialListView1.Items.Add(new ListViewItem(app.dispName));
-                materialListView1.Items.Add(app.dispName, _iconListManager.AddFileIcon("C:\\\\Users\\Arnyminer Z\\Source\\Repos\\Telekit-OS\\TelekitOS_WindowsPreview\\TelekitOS_WindowsPreview\\Administers\\Users\\User.cs"));
+                materialListView1.Items.Add(app.dispName);
             }
             MessageBox.Show(materialListView1.Items.Count + " total Installed apps." + Environment.NewLine +
                             "::" + string.Join(" ", materialListView1.Items.Cast<ListViewItem>()));

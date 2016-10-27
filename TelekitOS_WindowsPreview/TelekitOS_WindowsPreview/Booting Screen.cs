@@ -27,6 +27,9 @@ namespace TelekitOS_WindowsPreview
             pictureBox1.Location = new Point((Width - pictureBox1.Width) / 2, ((Height - pictureBox1.Height) / 2) + 50);
 
             InitializeAll();
+
+            Form1 form = new Form1(new Administers.Users.User("Emulador"));
+            form.ShowDialog();
         }
 
         private void InitializeAll()
