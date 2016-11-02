@@ -61,6 +61,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MaterialSkin">
       <HintPath>..\..\..\MaterialSkin\MaterialSkin\bin\Debug\MaterialSkin.dll</HintPath>
     </Reference>
@@ -92,10 +96,10 @@
     <Compile Include="Administers\IconGet\IconHelper.cs" />
     <Compile Include="Administers\IconGet\IconListManager.cs" />
     <Compile Include="Administers\Users\User.cs" />
-    <Compile Include="AltF4.cs">
+    <Compile Include="DefaultApps\AltF4.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AltF4.Designer.cs">
+    <Compile Include="DefaultApps\AltF4.Designer.cs">
       <DependentUpon>AltF4.cs</DependentUpon>
     </Compile>
     <Compile Include="Booting Screen.cs">
@@ -103,6 +107,18 @@
     </Compile>
     <Compile Include="Booting Screen.Designer.cs">
       <DependentUpon>Booting Screen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DefaultApps\Diccionario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DefaultApps\Diccionario.Designer.cs">
+      <DependentUpon>Diccionario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DefaultApps\Ejecutar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DefaultApps\Ejecutar.Designer.cs">
+      <DependentUpon>Ejecutar.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -145,11 +161,17 @@
     <EmbeddedResource Include="Administers\Desktop\DesktopItem.resx">
       <DependentUpon>DesktopItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AltF4.resx">
+    <EmbeddedResource Include="DefaultApps\AltF4.resx">
       <DependentUpon>AltF4.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Booting Screen.resx">
       <DependentUpon>Booting Screen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DefaultApps\Diccionario.resx">
+      <DependentUpon>Diccionario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DefaultApps\Ejecutar.resx">
+      <DependentUpon>Ejecutar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -179,6 +201,7 @@
     <EmbeddedResource Include="SystemWindows\Sources\_OpenFileDialog.resx">
       <DependentUpon>_OpenFileDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -216,6 +239,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Cursor.cur" />
+    <None Include="Resources\rae.png" />
+    <None Include="Resources\diccionari_cat.jpg" />
     <None Include="Resources\loadingSpinner.gif" />
     <None Include="Resources\menu_hover.png" />
     <None Include="Resources\menu.png" />

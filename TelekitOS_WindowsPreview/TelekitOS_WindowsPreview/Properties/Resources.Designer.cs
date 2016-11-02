@@ -73,6 +73,16 @@ namespace TelekitOS_WindowsPreview.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap diccionari_cat {
+            get {
+                object obj = ResourceManager.GetObject("diccionari_cat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap disclosure_arrow {
             get {
                 object obj = ResourceManager.GetObject("disclosure arrow", resourceCulture);
@@ -126,6 +136,16 @@ namespace TelekitOS_WindowsPreview.Properties {
         internal static System.Drawing.Bitmap minimize_dwn {
             get {
                 object obj = ResourceManager.GetObject("minimize_dwn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rae {
+            get {
+                object obj = ResourceManager.GetObject("rae", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

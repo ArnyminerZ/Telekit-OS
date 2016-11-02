@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TelekitOS_WindowsPreview.Administers.Applicacion
 {
@@ -12,6 +13,8 @@ namespace TelekitOS_WindowsPreview.Administers.Applicacion
         public string package = null;
         public string dispName = null;
         public Image icon = null;
+        public Form mainForm = null;
+        public string executionName = null;
 
         public App(){ }
         public App(string displayName) { dispName = displayName; }
@@ -20,13 +23,20 @@ namespace TelekitOS_WindowsPreview.Administers.Applicacion
         {
             if (package != null &&
                 dispName != null &&
-                icon != null)
+                icon != null &&
+                mainForm != null &&
+                executionName != null)
             {
                 return this;
             }else
             {
                 throw new SomeValuesNotSet();
             }
+        }
+
+        public void execute()
+        {
+            mainForm.Show();
         }
     }
 

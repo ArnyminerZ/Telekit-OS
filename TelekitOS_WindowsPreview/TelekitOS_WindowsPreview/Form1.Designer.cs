@@ -58,6 +58,7 @@ namespace TelekitOS_WindowsPreview
             this.carpetaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accesoDirectoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.AplicacionesDefecto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel3.SuspendLayout();
@@ -111,6 +112,8 @@ namespace TelekitOS_WindowsPreview
             // materialListView1
             // 
             this.materialListView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.materialListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.AplicacionesDefecto});
             this.materialListView1.Depth = 0;
             this.materialListView1.Font = new System.Drawing.Font("Roboto", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
             this.materialListView1.FullRowSelect = true;
@@ -118,6 +121,7 @@ namespace TelekitOS_WindowsPreview
             this.materialListView1.Location = new System.Drawing.Point(5, 93);
             this.materialListView1.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialListView1.MouseState = MaterialSkin.MouseState.OUT;
+            this.materialListView1.MultiSelect = false;
             this.materialListView1.Name = "materialListView1";
             this.materialListView1.OwnerDraw = true;
             this.materialListView1.Size = new System.Drawing.Size(200, 280);
@@ -125,6 +129,7 @@ namespace TelekitOS_WindowsPreview
             this.materialListView1.UseCompatibleStateImageBehavior = false;
             this.materialListView1.View = System.Windows.Forms.View.Details;
             this.materialListView1.SelectedIndexChanged += new System.EventHandler(this.materialListView1_SelectedIndexChanged);
+            this.materialListView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.materialListView1_MouseDoubleClick);
             // 
             // materialDivider4
             // 
@@ -291,7 +296,7 @@ namespace TelekitOS_WindowsPreview
             this.materialRaisedButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialRaisedButton1.Depth = 0;
             this.materialRaisedButton1.Icon = null;
-            this.materialRaisedButton1.Location = new System.Drawing.Point(26, 122);
+            this.materialRaisedButton1.Location = new System.Drawing.Point(667, 83);
             this.materialRaisedButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRaisedButton1.Name = "materialRaisedButton1";
             this.materialRaisedButton1.Primary = true;
@@ -345,6 +350,11 @@ namespace TelekitOS_WindowsPreview
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.MouseEnter += new System.EventHandler(this.pictureBox1_MouseHover);
             this.pictureBox1.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
+            // 
+            // AplicacionesDefecto
+            // 
+            this.AplicacionesDefecto.Text = "Aplicaciones por defecto";
+            this.AplicacionesDefecto.Width = 200;
             // 
             // Form1
             // 
@@ -402,5 +412,6 @@ namespace TelekitOS_WindowsPreview
         private ToolStripMenuItem carpetaToolStripMenuItem;
         private ToolStripMenuItem accesoDirectoToolStripMenuItem;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
+        private ColumnHeader AplicacionesDefecto;
     }
 }

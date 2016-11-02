@@ -14,34 +14,42 @@ using TelekitOS_WindowsPreview.Administers.Applicacion;
 using TelekitOS_WindowsPreview.Administers.Desktop;
 using TelekitOS_WindowsPreview.Administers.IconGet.IconHelper;
 using TelekitOS_WindowsPreview.Administers.Users;
+using TelekitOS_WindowsPreview.DefaultApps;
 using TelekitOS_WindowsPreview.SystemWindows;
 
 namespace TelekitOS_WindowsPreview
 {
     public partial class Form1 : Form
     {
+        #region windows
         Install install;
         Settings settings;
         FileExplorer fileExplorer;
         AltF4 alt;
+        Ejecutar ejecutar;
+        #endregion
 
-        private ImageList _smallImageList = new ImageList();
-        private ImageList _largeImageList = new ImageList();
-        private IconListManager _iconListManager;
-
+        #region cursors dirs
         public string mainCursorSource = "C:\\\\Telekit\\System\\Cursors\\cursor.cur";
         public string handCursorSource = "C:\\\\Telekit\\System\\Cursors\\text.cur";
         public string loadingCursorSource = "C:\\\\Telekit\\System\\Cursors\\loading.cur";
         public string textCursorSource = "C:\\\\Telekit\\System\\Cursors\\text.cur";
+        #endregion
 
+        #region System dirs
+        public static readonly string sep = "\\";
         public static string telekitBaseDir = "C:\\\\Telekit";
         public static string usersBaseDir = telekitBaseDir + "\\Users";
+        public string softwareBaseDir;
         public string currentUserDir;
         public string currentUserDesktopDir;
+        #endregion
 
         public List<DesktopItem> desktopIcons = new List<DesktopItem>();
 
+        #region current user
         public User user;
+        #endregion
 
         #region Taskbar sources
         public List<Form> oppenedApps = new List<Form>();
@@ -55,13 +63,8 @@ namespace TelekitOS_WindowsPreview
             settings = new Settings(this);
             fileExplorer = new FileExplorer(this);
             alt = new AltF4(this);
-
-            _smallImageList.ColorDepth = ColorDepth.Depth32Bit;
-            _largeImageList.ColorDepth = ColorDepth.Depth32Bit;
-            _smallImageList.ImageSize = new System.Drawing.Size(16, 16);
-            _largeImageList.ImageSize = new System.Drawing.Size(32, 32);
-            _iconListManager = new IconListManager(_smallImageList, _largeImageList);
-
+            ejecutar = new Ejecutar();
+            
             InitializeComponent();
             setupUserDirsAndDesktop();
 
@@ -109,8 +112,8 @@ namespace TelekitOS_WindowsPreview
                 //materialListView1.Items.Add(new ListViewItem(app.dispName));
                 materialListView1.Items.Add(app.dispName);
             }
-            MessageBox.Show(materialListView1.Items.Count + " total Installed apps." + Environment.NewLine +
-                            "::" + string.Join(" ", materialListView1.Items.Cast<ListViewItem>()));
+            /*MessageBox.Show(materialListView1.Items.Count + " total Installed apps." + Environment.NewLine +
+                            "::" + string.Join(" ", materialListView1.Items.Cast<ListViewItem>()));*/
 
             Update.Start();
         }
@@ -175,6 +178,29 @@ namespace TelekitOS_WindowsPreview
         private void materialListView1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+        private void materialListView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            string appName = materialListView1.SelectedItems[0].Text;
+            List<App> apps = AppsControl.installedApps;
+
+            //MessageBox.Show("Trying to show " + appName);
+
+            foreach(App app in apps)
+            {
+                if (app.dispName.Equals(appName, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    //MessageBox.Show("Executing " + appName);
+                    app.execute();
+                }/*else
+                    MessageBox.Show("Passing " + appName);*/
+            }
+
+            // DESELECT ALL 
+            foreach(ListViewItem item in materialListView1.SelectedItems)
+            {
+                item.Selected = false;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -295,30 +321,106 @@ namespace TelekitOS_WindowsPreview
 
         public void registerDefaultApps()
         {
+            App execute = new App("Execute");
+            execute.package = "com.telekit.exec";
+            execute.executionName = "exec";
+            execute.icon = new Bitmap(Properties.Resources.wrench);
+            execute.mainForm = this.ejecutar;
+
             App settings = new App("Settings");
+            settings.executionName = "sett";
             settings.package = "com.telekit.settings";
             settings.icon = new Bitmap(Properties.Resources.wrench);
+            settings.mainForm = this.settings;
 
+            App dictionary = new App("Dictionary");
+            dictionary.package = "com.telekit.dict";
+            dictionary.executionName = "dict";
+            dictionary.icon = new Bitmap(Properties.Resources.wrench);
+            dictionary.mainForm = new Diccionario();
+
+            AppsControl.Register(execute.getCompleteApp());
             AppsControl.Register(settings.getCompleteApp());
+            AppsControl.Register(dictionary.getCompleteApp());
+        }
+
+        public void installApps()
+        {
+            // fileNames value is all files in softwareBaseDir variable
+            string[] fileNames = Directory.GetFiles(softwareBaseDir, "*.*", SearchOption.AllDirectories);
+            foreach (string appDir in fileNames)
+            {
+                App currentRegisteringApp = new App();
+                string currentAppDir = softwareBaseDir + sep + appDir;
+                if (File.Exists(currentAppDir + sep + "info.nf"))
+                {
+                    string[] infoFileLines = File.ReadAllLines(currentAppDir + sep + "info.nf");
+                    foreach(string line in infoFileLines)
+                    {
+                        // This detects if is commented
+                        if (line.StartsWith("-->"))
+                        {
+                            continue;
+                        }
+
+                        // If line defines app name
+                        if (line.StartsWith("NM--"))
+                        {
+                            currentRegisteringApp.dispName = line.Replace("NM--", "");
+                        }
+                        // If line defines app package
+                        if (line.StartsWith("PK--"))
+                        {
+                            currentRegisteringApp.package = line.Replace("PK--", "");
+                        }
+                        // If line defines app mainForm
+                        if (line.StartsWith("MF--"))
+                        {
+
+                            currentRegisteringApp.mainForm = new Form(line.Replace("PK--", "");
+                        }
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
         }
 
         public void setupUserDirsAndDesktop()
         {
+            #region Create users base dir
             if (!Directory.Exists(usersBaseDir))
             {
                 Directory.CreateDirectory(usersBaseDir);
             }
+            #endregion
+            #region Create current user dir
             currentUserDir = usersBaseDir + "\\" + user.userName;
             if (!Directory.Exists(currentUserDir))
             {
                 Directory.CreateDirectory(currentUserDir);
             }
+            #endregion
+            #region Create current user desktop dir
             currentUserDesktopDir = currentUserDir + "\\Desktop";
             if (!Directory.Exists(currentUserDesktopDir))
             {
                 Directory.CreateDirectory(currentUserDesktopDir);
             }
-            foreach(string file in Directory.EnumerateFiles(currentUserDesktopDir))
+            #endregion
+
+            #region Create software directory
+            softwareBaseDir = telekitBaseDir + "\\Software";
+            if (!Directory.Exists(softwareBaseDir))
+            {
+                Directory.CreateDirectory(softwareBaseDir);
+            }
+            #endregion
+
+            #region AddDesktopItems
+            foreach (string file in Directory.EnumerateFiles(currentUserDesktopDir))
             {
                 DesktopItem button = new DesktopItem();
                 button.Text = file.Replace(currentUserDesktopDir, "").Replace("\\", "");
@@ -335,6 +437,7 @@ namespace TelekitOS_WindowsPreview
 
                 counter++;
             }
+            #endregion
         }
     }
 }
