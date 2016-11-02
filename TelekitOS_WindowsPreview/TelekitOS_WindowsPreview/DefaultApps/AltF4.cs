@@ -20,9 +20,9 @@ namespace TelekitOS_WindowsPreview
             this.form1 = form1;
             InitializeComponent();
 
-            Cursor = new Cursor(form1.mainCursorSource);
+            Cursor = new Cursor(Form1.mainCursorSource);
             UseWaitCursor = true;
-            Cursor.Current = new Cursor(form1.loadingCursorSource);
+            Cursor.Current = new Cursor(Form1.loadingCursorSource);
             UseWaitCursor = false;
         }
 

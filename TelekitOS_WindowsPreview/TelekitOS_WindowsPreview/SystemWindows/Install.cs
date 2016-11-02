@@ -17,12 +17,12 @@ namespace TelekitOS_WindowsPreview
 
             desktopForm.checkAndDownloadSystemFiles();
 
-            Cursor = new Cursor(desktopForm.mainCursorSource);
+            Cursor = new Cursor(Form1.mainCursorSource);
             UseWaitCursor = true;
-            Cursor.Current = new Cursor(desktopForm.loadingCursorSource);
+            Cursor.Current = new Cursor(Form1.loadingCursorSource);
             UseWaitCursor = false;
             Cursor.Position = new Point(textBox1.Location.X + 3, textBox1.Location.Y + 3);
-            Cursor.Current = new Cursor(desktopForm.textCursorSource);
+            Cursor.Current = new Cursor(Form1.textCursorSource);
         }
 
         private void Install_Load(object sender, EventArgs e)

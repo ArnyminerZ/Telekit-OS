@@ -15,6 +15,7 @@ namespace TelekitOS_WindowsPreview.Administers.Applicacion
         public Image icon = null;
         public Form mainForm = null;
         public string executionName = null;
+        public Cursor cursor = null;
 
         public App(){ }
         public App(string displayName) { dispName = displayName; }
@@ -25,18 +26,22 @@ namespace TelekitOS_WindowsPreview.Administers.Applicacion
                 dispName != null &&
                 icon != null &&
                 mainForm != null &&
-                executionName != null)
+                executionName != null &&
+                cursor != null)
             {
                 return this;
-            }else
+            }
+            else
             {
-                throw new SomeValuesNotSet();
+                throw new SomeValuesNotSet("You must set all the values specified");
             }
         }
 
         public void execute()
         {
             mainForm.Show();
+            Cursor.Current = cursor;
+            mainForm.Cursor = cursor;
         }
     }
 

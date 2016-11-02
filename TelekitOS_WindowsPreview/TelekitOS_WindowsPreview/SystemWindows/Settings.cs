@@ -19,9 +19,9 @@ namespace TelekitOS_WindowsPreview.SystemWindows
             this.desktopForm = desktopForm;
             InitializeComponent();
 
-            Cursor = new Cursor(desktopForm.mainCursorSource);
+            Cursor = new Cursor(Form1.mainCursorSource);
             UseWaitCursor = true;
-            Cursor.Current = new Cursor(desktopForm.loadingCursorSource);
+            Cursor.Current = new Cursor(Form1.loadingCursorSource);
             UseWaitCursor = false;
         }
 

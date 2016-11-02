@@ -29,11 +29,16 @@ namespace TelekitOS_WindowsPreview
         Ejecutar ejecutar;
         #endregion
 
-        #region cursors dirs
-        public string mainCursorSource = "C:\\\\Telekit\\System\\Cursors\\cursor.cur";
-        public string handCursorSource = "C:\\\\Telekit\\System\\Cursors\\text.cur";
-        public string loadingCursorSource = "C:\\\\Telekit\\System\\Cursors\\loading.cur";
-        public string textCursorSource = "C:\\\\Telekit\\System\\Cursors\\text.cur";
+        #region Cursors
+        public static readonly string mainCursorSource = "C:\\\\Telekit\\System\\Cursors\\cursor.cur";
+        public static readonly string handCursorSource = "C:\\\\Telekit\\System\\Cursors\\text.cur";
+        public static readonly string loadingCursorSource = "C:\\\\Telekit\\System\\Cursors\\loading.cur";
+        public static readonly string textCursorSource = "C:\\\\Telekit\\System\\Cursors\\text.cur";
+
+        public static readonly Cursor mainCursor = new Cursor(mainCursorSource);
+        public static readonly Cursor handCursor = new Cursor(handCursorSource);
+        public static readonly Cursor loadingCursor = new Cursor(loadingCursorSource);
+        public static readonly Cursor textCursor = new Cursor(textCursorSource);
         #endregion
 
         #region System dirs
@@ -89,8 +94,6 @@ namespace TelekitOS_WindowsPreview
                 }
             }
         }
-
-        #region Form Events
         private void Form1_Load(object sender, EventArgs e)
         {
             panel1.Location = new Point(0, Height - panel1.Height);
@@ -107,6 +110,7 @@ namespace TelekitOS_WindowsPreview
             materialLabel1.Text = user.userName;
 
             registerDefaultApps();
+            installApps();
             foreach (App app in AppsControl.installedApps)
             {
                 //materialListView1.Items.Add(new ListViewItem(app.dispName));
@@ -115,8 +119,10 @@ namespace TelekitOS_WindowsPreview
             /*MessageBox.Show(materialListView1.Items.Count + " total Installed apps." + Environment.NewLine +
                             "::" + string.Join(" ", materialListView1.Items.Cast<ListViewItem>()));*/
 
-            Update.Start();
+            update.Start();
         }
+
+        #region Form Events
         private void Form1_Click(object sender, EventArgs e)
         {
             panel2.Hide();
@@ -192,6 +198,7 @@ namespace TelekitOS_WindowsPreview
                 {
                     //MessageBox.Show("Executing " + appName);
                     app.execute();
+                    app.mainForm.Cursor = mainCursor;
                 }/*else
                     MessageBox.Show("Passing " + appName);*/
             }
@@ -325,31 +332,35 @@ namespace TelekitOS_WindowsPreview
             execute.package = "com.telekit.exec";
             execute.executionName = "exec";
             execute.icon = new Bitmap(Properties.Resources.wrench);
+            execute.cursor = mainCursor;
             execute.mainForm = this.ejecutar;
 
             App settings = new App("Settings");
             settings.executionName = "sett";
             settings.package = "com.telekit.settings";
             settings.icon = new Bitmap(Properties.Resources.wrench);
+            settings.cursor = mainCursor;
             settings.mainForm = this.settings;
 
             App dictionary = new App("Dictionary");
             dictionary.package = "com.telekit.dict";
             dictionary.executionName = "dict";
             dictionary.icon = new Bitmap(Properties.Resources.wrench);
+            dictionary.cursor = mainCursor;
             dictionary.mainForm = new Diccionario();
 
             AppsControl.Register(execute.getCompleteApp());
             AppsControl.Register(settings.getCompleteApp());
             AppsControl.Register(dictionary.getCompleteApp());
         }
-
         public void installApps()
         {
             // fileNames value is all files in softwareBaseDir variable
-            string[] fileNames = Directory.GetFiles(softwareBaseDir, "*.*", SearchOption.AllDirectories);
-            foreach (string appDir in fileNames)
+            string[] fileNames = Directory.GetDirectories(softwareBaseDir);
+            foreach (string _appDir in fileNames)
             {
+                string appDir = _appDir.Replace(softwareBaseDir + sep, "");
+                MessageBox.Show("Loading app " + appDir);
                 App currentRegisteringApp = new App();
                 string currentAppDir = softwareBaseDir + sep + appDir;
                 if (File.Exists(currentAppDir + sep + "info.nf"))
@@ -376,10 +387,21 @@ namespace TelekitOS_WindowsPreview
                         // If line defines app mainForm
                         if (line.StartsWith("MF--"))
                         {
-
-                            currentRegisteringApp.mainForm = new Form(line.Replace("PK--", "");
+                            currentRegisteringApp.mainForm = new Form();
+                        }
+                        // If line defines app mainForm
+                        if (line.StartsWith("EN--"))
+                        {
+                            currentRegisteringApp.executionName = line.Replace("EN--", "");
+                        }
+                        // If line defines app mainForm
+                        if (line.StartsWith("IC--"))
+                        {
+                            currentRegisteringApp.icon = Image.FromFile(currentAppDir + sep + "res" + sep + line.Replace("IC--", ""));
                         }
                     }
+
+                    AppsControl.Register(currentRegisteringApp);
                 }
                 else
                 {
@@ -434,6 +456,7 @@ namespace TelekitOS_WindowsPreview
                 int x = 10 + ((counter * btn.Width) + 3);
                 int y = 10 + (counter * +(counter / 5));
                 btn.Location = new Point(x, y);
+                btn.Icon = Properties.Resources.gear_dwn;
 
                 counter++;
             }
