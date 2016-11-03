@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TelekitOS_WindowsPreview.Administers.Users;
 using TelekitOS_WindowsPreview.SystemWindows.Sources;
 
 namespace TelekitOS_WindowsPreview
@@ -24,17 +25,17 @@ namespace TelekitOS_WindowsPreview
 
         private void Booting_Screen_Load(object sender, EventArgs e)
         {
-            pictureBox1.Location = new Point((Width - pictureBox1.Width) / 2, ((Height - pictureBox1.Height) / 2) + 50);
+            pictureBox1.Location = new Point(Width / 2 - pictureBox1.Width, Height / 2 - pictureBox1.Height + 50);
 
-            InitializeAll();
+            materialLabel2.Text = "Version: " + DownloadedVersion();
+            //InitializeAll();
 
-            Form1 form = new Form1(new Administers.Users.User("Emulador"));
+            Form1 form = new Form1(new User("Emulador"));
             form.ShowDialog();
         }
 
         private void InitializeAll()
         {
-            materialLabel2.Text = "Version: " + DownloadedVersion();
             if(DownloadedVersion() != WebVersion())
             {
                 MaterialMessageBox mmb = new MaterialMessageBox("Una nueva versión está disponible, haz click en actualizar para iniciar la actualización", new bool[] { false, false });

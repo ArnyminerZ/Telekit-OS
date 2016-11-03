@@ -8,7 +8,7 @@ namespace TelekitOS_WindowsPreview.Administers.Users
 {
     public class User
     {
-        public readonly string userName;
+        public string userName;
 
         public User(string name)
         {

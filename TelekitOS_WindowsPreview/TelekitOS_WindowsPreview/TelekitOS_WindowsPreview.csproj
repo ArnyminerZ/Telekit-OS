@@ -12,20 +12,26 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>ftp://specialsoft.hol.es/</PublishUrl>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>ftp://specialsoft.hol.es/Telekit/</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>2</ApplicationRevision>
+    <InstallUrl>http:\\www.specialsoft.hol.es/Telekit/</InstallUrl>
+    <TargetCulture>es</TargetCulture>
+    <PublisherName>Arnyminer Z</PublisherName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>0.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -59,6 +65,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>TELEKIT.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
@@ -96,6 +105,7 @@
     <Compile Include="Administers\IconGet\IconHelper.cs" />
     <Compile Include="Administers\IconGet\IconListManager.cs" />
     <Compile Include="Administers\Users\User.cs" />
+    <Compile Include="Administers\Users\UserControl.cs" />
     <Compile Include="DefaultApps\AltF4.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +135,12 @@
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
     </Compile>
     <Compile Include="SystemWindows\FileExplorer.cs">
       <SubType>Form</SubType>
@@ -175,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SystemWindows\FileExplorer.resx">
       <DependentUpon>FileExplorer.cs</DependentUpon>
@@ -239,6 +258,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Cursor.cur" />
+    <Content Include="TELEKIT.ico" />
+    <Content Include="test.ico" />
     <None Include="Resources\rae.png" />
     <None Include="Resources\diccionari_cat.jpg" />
     <None Include="Resources\loadingSpinner.gif" />
@@ -250,6 +271,14 @@
     <None Include="Resources\switch_on.png" />
     <None Include="Resources\switch_off.png" />
     <None Include="Resources\gear_dwn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <FileAssociation Include=".nf">
+      <Visible>False</Visible>
+      <Description>The Telekit application attributes file</Description>
+      <Progid>telekit.nf</Progid>
+      <DefaultIcon>test.ico</DefaultIcon>
+    </FileAssociation>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

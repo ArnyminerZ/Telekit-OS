@@ -14,9 +14,10 @@ namespace TelekitOS_WindowsPreview
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Administers.Users.User emulationUser = new TelekitOS_WindowsPreview.Administers.Users.User("Invitado");
-            Application.Run(new Form1(emulationUser));
-            //Application.Run(new Booting_Screen());
+            Administers.Users.User emulationUser = new Administers.Users.User("Invitado");
+            //Application.Run(new Form1(emulationUser));
+            //Application.Run(new Booting_Screen())
+            Application.Run(new Login());
         }
     }
 }
